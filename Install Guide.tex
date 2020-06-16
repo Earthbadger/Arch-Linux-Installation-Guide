@@ -1,0 +1,92 @@
+%This section tells LaTeX what packages to use and where things are
+\documentclass[titlepage]{article}
+\usepackage{graphicx}
+\graphicspath{{./}{./images/}}
+ \usepackage{float}
+ \usepackage{hyperref} 
+ \usepackage{svg}
+  \hypersetup{ 
+  colorlinks=true, 
+  urlcolor=cyan,
+  linkcolor=black
+  }
+
+%This is what makes the title look nice
+\usepackage{vmargin}
+\setmarginsrb{3 cm}{2.5 cm}{3 cm}{2.5 cm}{1 cm}{1.5 cm}{1 cm}{1.5 cm}
+
+\title{Arch Linux Installation Guide} %Title
+
+\makeatletter
+\let\thetitle\@title
+\def\version{1}
+\begin{document}
+
+% Title
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+    \centering
+    \vspace*{0.5 cm}
+    \includegraphics[scale = 0.2]{logo.png}\\	% Revision Logo
+    \includegraphics[scale = 0.03]{revi.png}    
+	\rule{\linewidth}{0.2 mm} \\[0.5 cm]
+	{ \huge \bfseries \thetitle}\\
+	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
+	\includesvg{Tux.svg}  
+\end{titlepage}
+
+% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Introduction}
+This guide is intended to be an open-source and free guide for installing of Arch Linux. It should be followed up by using the Revision branch of Larbs.xyz for the best experience. You are free to modify it in any way.
+This guide uses the the WTFPL (See Licence.txt). This guide is written Using {\LaTeX}. Source code is provided at \url{https://github.com/Earthbadger}
+
+% Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{centering}
+\section*{Contents page}
+\end{centering}
+\tableofcontents
+% What Is Arch Linux?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{centering}
+\section{What Is Arch Linux?}
+     \end{centering}
+     Arch Linux is a GNU/Linux distribution that lets you the user create your own experience. It is a lightweight distribution that comes only with the essential's to get started.
+\newpage
+\begin{centering}
+% Pre-Installation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Pre-installation}
+\end{centering}
+   To start the installation head over to \url{https://www.archlinux.org/download/} and scroll down until you see the list of mirrors, pick one that is based in your country for the fastest download time. Once downloaded use a program like Rufus (Windows),Etcher (MacOSX) or dd (Gnu/Linux)\\
+    \vspace*{0.5 cm}
+   \subsection{Make sure you use legacy instead of UEFI}
+   Installation of Arch Linux is harder than most other GNU/Linux distributions as the initial setup is done through the terminal. When you boot into the Arch Linux installer make sure to boot in legacy mode as the UEFI installation makes the process much harder and there's no real benefits over a legacy install.\\
+   \vspace*{0.5 cm}
+   \subsection{Make sure your connected to the internet}
+   When the USB boots into Arch you will be shown a terminal, This is where you can enter commands to install Arch. The first thing to do with any Arch Linux install is to see if you have a working internet connection, Using a wired connection is recommended over WIFI as it simplifies the process. To check if you have a working internet connection type "ping -c 3 1.1.1.1". If you can ping the address then you are good to install Arch if not then please refer to the Arch Wiki at \url{https://wiki.archlinux.org}.
+   \vspace*{0.5 cm}
+   \subsection{Checking drive labels and setting up partitions}
+   The best way to check drive labels is by using "lsblk" this will list the drive identifiers, the size, the partitions and where the partitions are mounted. In this guide "sdXX" is used to refer to the drive label and partition that you want to use, for example lets say you have multiple drive's one is a 250GB solid state drive and the other is a 1TB hard disk drive, by using lsblk you can see which drive is which. We now need to setup partitions to install Arch Linux too, use lsblk to show you the identifier of the drive you want to use "sdXX" and type "cfdisk /dev/sdX". You might see a screen with multiple options for this select "DOS" You will now see a screen where you can create new partitions. If you see any existing partitions double check that you selected the correct drive and if so delete the existing partitions by selecting them then selecting delete. to create a new partition press enter on create partition, you will want to create a partition using all the available space this will be your root partition. Now select write, press enter and then type yes to confirm the write, once done select quit and you will be brought back to the terminal.
+   \vspace*{0.5 cm}
+   \subsection{Formatting and mounting partitions}
+   Now we will format the partition we just created. first check that the new partition has been created by typing "lsblk" if it has you can continue with the installation. To format a a partition in Arch Linux we will use the "mkfs" command for this we will be using the "ext4" file system. type "mkfs.ext4 /dev/sdXX" XX being the identifier and the partition number. To mount a partition in Arch Linux we will use the "mount" command, We will be mounting the root partition we just formatted to /mnt, To do this type "mount /dev/sdXX /mnt" after this check the mount points with "lsblk"
+   \vspace*{0.5 cm}
+   \subsection{Installing The Base System, Creating an fstab and chrooting into it}
+   % The $>$ has to be there because of a quirk in how LaTeX prints < and >
+  We will now install the base system using the command "pacstrap" this uses the pacman package manager but can be used to install packages to wherever you want however its most common use it to install packages to another system like we are going to do here. We will need to do a few things to make sure the system is upto date first to do this type "Pacman -Syu". To install the packages needed for an Arch Linux install type "pacstrap /mnt base base-devel linux linux-firmware" this make take a while depending on your internet connection however we can fix this later on using a package called "reflector". We now need to create an fstab file this can be done by using the "genfstab" command. To create an fstab type "genfstab -U -p /mnt $>$$>$ /mnt/etc/fstab" to check that the fstab has been created type "cat /mnt/etc/fstab" If it has we can continue onto chrooting into the system. Chrooting changes the root directory
+  in Linux, to chroot into our newly installed Arch system type "arch-chroot /mnt /bin/bash". We are now into our newly installed Arch Linux system.
+  \vspace*{0.5 cm}
+  \subsection{Setting the locale,Time,Name And Hosts}
+  In this section we will set the locale, time, name and setup the host file for our system. We will also be learning how to install packages in this section as we need to install "nano" the text editor to be able to modify some files needed for installation. To install nano type "pacman -S nano" then wait for it to install. We now need to set the locale this can be done by typing "nano /etc/locale.gen". You should now be in a text editor what we need to do here is un-comment the language you use for example if your in the UK you would un-comment "en$_$GB.UTF-8 UTF-8". un-commenting means removing the pound sign. We now need to set the clock which can be done by typing "ln -sf /usr/zoneinfo/" now press tab to see what location's there are once done press tab again and select your location then type space "/etc/localtime" on the end of the last command. Now type "hwclock --systohc --utc". Now we can set a name for the system to set a name we use the command "echo" to set the name type "echo namehere $>$ /etc/hostname". We now need to setup the host file to edit the host file type "nano /etc/hosts" then add "127.0.0.1 localhost" to the first empty line "::1    localhost" to the second and "127.0.1.1 myhostname.localdomain myhostname" to the third where "myhostname" is the name you set ealier.
+  \vspace*{0.5 cm}
+  \subsection{Setting up networking, A password and installing a boot loader}
+  We will now install "dhcpcd" a program that assigns an IP address to our system. To install dhcpcd type "pacman -S dhcpcd" and wait for it to install, After the installation is complete type "systemctl enable dhcpcd". Now we can set a password for our root user using "passwd" to set a password type "passwd" then enter the password you want for your root account. Now we will install a bootloader, for this guide we will be using the bootloader "GRUB". To install GRUB type "pacman -S grub" If you are dual booting with another Linux distro or Windows you can also install os-prober so GRUB can boot those as well. Now we will install the GRUB bootloader to our drive to do this type "grub-install /dev/sdX" sdX being the drive identifier. Now we need to generate a configuration file for GRUB, To do this type "grub-mkconfig -o /boot/grub/grub.cfg". Now you can type "exit" and "umount -R /mnt then reboot the system. You should now see the grub bootloader with an option for Arch Linux along with any other operating systems you may have installed, Select Arch Linux and wait for the login screen to appear login with the username "root" and the password you specified earlier.\\
+\section{CONGRATULATIONS You have now installed Arch Linux.}
+  But what next? Well there are a couple of options you could either use the original \url{https://larbs.xyz} by Luke Smith that provides you with a desktop environment with loads of programs preinstalled (Keep in mind this is very bloated and is limited to only one window manager) or you could use the customized Revision version of larbs that lets you pick what you want on your system along with documentation included on how to use Linux along with your window manager of choice. You could go watch Distrotube's video's on window managers and desktop environments \url{https://www.youtube.com/channel/UCVls1GmFKf6WlTraIb_IaJg}
+  or if you want to configure everything yourself you can read the Arch Wiki \url{https://wiki.archlinux.org/}
+\end{document}

@@ -28,7 +28,7 @@
 \begin{titlepage}
     \centering
     \vspace*{0.5 cm}
-    \includegraphics[scale = 0.2]{logo.png}\\	% Revision Logo  
+    \includegraphics[scale = 0.2]{logo.png}\\	% Revision Logo
 	\rule{\linewidth}{0.2 mm} \\[0.5 cm]
 	{ \huge \bfseries \thetitle}\\
 	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
@@ -77,7 +77,7 @@ This guide uses the the WTFPL (See Licence.txt). This guide is written Using {\L
    \vspace*{0.5 cm}
    \subsection{Installing The Base System, Creating an fstab and chrooting into it}
    % The $>$ has to be there because of a quirk in how LaTeX prints < and >
-  We will now install the base system using the command "pacstrap" this uses the pacman package manager but can be used to install packages to wherever you want however its most common use it to install packages to another system like we are going to do here. We will need to do a few things to make sure the system is upto date and uses the best mirrors for our location. First we need to install a package called "reflector" however first we need to update the package manager to do this type "Pacman -Sy". Now we can install reflector to install reflector type "pacman -S reflector". Once done type "reflector -C "Country Name Here" -f 30 -l 30 -n 30 --save /etc/pacman.d/mirrorlist". This will sort the mirrors for the best possible speed in your location. To install the packages needed for an Arch Linux install type "pacstrap /mnt base base-devel linux linux-firmware" this make take a while depending on your internet connection. We now need to create an fstab file this can be done by using the "genfstab" command. To create an fstab type "genfstab -U -p /mnt $>$$>$ /mnt/etc/fstab" to check that the fstab has been created type "cat /mnt/etc/fstab" If it has we can continue onto chrooting into the system. Chrooting changes the root directory
+  We will now install the base system using the command "pacstrap" this uses the pacman package manager but can be used to install packages to wherever you want however its most common use it to install packages to another system like we are going to do here. We will need to do a few things to make sure the system is upto date and uses the best mirrors for our location. First we need to install a package called "reflector" however first we need to update the package manager to do this type "Pacman -Sy". Now we can install reflector to install reflector type "pacman -S reflector". Once done type "reflector -C "Country Name Here" -f 30 -l 30 -n 30 $--$save /etc/pacman.d/mirrorlist". This will sort the mirrors for the best possible speed in your location. To install the packages needed for an Arch Linux install type "pacstrap /mnt base base-devel linux linux-firmware" this make take a while depending on your internet connection. We now need to create an fstab file this can be done by using the "genfstab" command. To create an fstab type "genfstab -U -p /mnt $>$$>$ /mnt/etc/fstab" to check that the fstab has been created type "cat /mnt/etc/fstab" If it has we can continue onto chrooting into the system. Chrooting changes the root directory
   in Linux, to chroot into our newly installed Arch system type "arch-chroot /mnt /bin/bash". We are now into our newly installed Arch Linux system.
   \vspace*{0.5 cm}
   \subsection{Setting the locale,Time,Name And Hosts}

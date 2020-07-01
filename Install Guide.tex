@@ -28,7 +28,6 @@
 \begin{titlepage}
     \centering
     \vspace*{0.5 cm}
-    \includegraphics[scale = 0.2]{logo.png}\\	% Revision Logo
 	\rule{\linewidth}{0.2 mm} \\[0.5 cm]
 	{ \huge \bfseries \thetitle}\\
 	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
@@ -38,7 +37,7 @@
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Introduction}
-This guide is intended to be an open-source and free guide for installing of Arch Linux. It should be followed up by using the Revision branch of Larbs.xyz for the best experience. You are free to modify it in any way.
+This guide is intended to be an open-source and free guide for installing of Arch Linux. You are free to modify it in any way.
 This guide uses the the WTFPL (See Licence.txt). This guide is written Using {\LaTeX}. Source code is provided at \url{https://github.com/Earthbadger}
 
 % Contents
@@ -86,6 +85,6 @@ This guide uses the the WTFPL (See Licence.txt). This guide is written Using {\L
   \subsection{Setting up networking, A password and installing a boot loader}
   We will now install "dhcpcd" a program that assigns an IP address to our system. To install dhcpcd type "pacman -S dhcpcd" and wait for it to install, After the installation is complete type "systemctl enable dhcpcd". Now we can set a password for our root user using "passwd" to set a password type "passwd" then enter the password you want for your root account. Now we will install a bootloader, for this guide we will be using the bootloader "GRUB". To install GRUB type "pacman -S grub" If you are dual booting with another Linux distro or Windows you can also install os-prober so GRUB can boot those as well. Now we will install the GRUB bootloader to our drive to do this type "grub-install /dev/sdX" sdX being the drive identifier. Now we need to generate a configuration file for GRUB, To do this type "grub-mkconfig -o /boot/grub/grub.cfg". Now you can type "exit" and "umount -R /mnt then reboot the system. You should now see the grub bootloader with an option for Arch Linux along with any other operating systems you may have installed, Select Arch Linux and wait for the login screen to appear login with the username "root" and the password you specified earlier.\\
 \section{CONGRATULATIONS You have now installed Arch Linux.}
-  But what next? Well there are a couple of options you could either use the original \url{https://larbs.xyz} by Luke Smith that provides you with a desktop environment with loads of programs preinstalled (Keep in mind this is very bloated and is limited to only one window manager) or you could use the customized Revision version of larbs that lets you pick what you want on your system along with documentation included on how to use Linux along with your window manager of choice. You could go watch Distrotube's video's on window managers and desktop environments \url{https://www.youtube.com/channel/UCVls1GmFKf6WlTraIb_IaJg}
+  But what next? Well there are a couple of options you could either use the original \url{https://larbs.xyz} by Luke Smith that provides you with a desktop environment with loads of programs preinstalled (Keep in mind this is very bloated and is limited to only one window manager). You could go watch Distrotube's video's on window managers and desktop environments \url{https://www.youtube.com/channel/UCVls1GmFKf6WlTraIb_IaJg}
   or if you want to configure everything yourself you can read the Arch Wiki \url{https://wiki.archlinux.org/}
 \end{document}
